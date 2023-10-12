@@ -56,7 +56,7 @@
       <c:forEach var="boards" items="${boards }">
         <tr style="text-align: center; border-top: 1px solid lightgray;">
           <td>${boards.getPostId() }</td>
-          <td><a href="view?num=${boards.getPostId() }">${boards.getTitle() }</a></td>
+          <td><a href="view?postId=${boards.getPostId() }">${boards.getTitle() }</a></td>
           <td>${boards.getAuthorId() }</td>
           <td>${boards.getViewCount() }</td>
           <fmt:formatDate value="${boards.getPostDate() }" type="date" pattern="yyyy-MM-dd" var="postDate" />
@@ -77,7 +77,7 @@
     
   <button type="button" onclick="location.href='write';">글쓰기</button>
   <c:if test="${pageHandler.showPrev }">
-    <a href="<c:url value='/board${pageHandler.searchCondition.getQueryString(pageHandler.beginPage-1)}'/>">&laquo;</a>
+    <a href="<c:url value='/board${searchCondition.getQueryString(pageHandler.beginPage-1)}'/>">&laquo;</a>
   </c:if>
   <c:forEach var="i" begin="${pageHandler.beginPage }" end="${pageHandler.endPage }">
     <a class="${pageHandler.searchCondition.pageNum==i? 'check':'' }" href="<c:url value='/board${pageHandler.searchCondition.getQueryString(i)}'/>">${i }</a>

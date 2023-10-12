@@ -49,6 +49,5 @@ public class BoardController extends HttpServlet{
 		req.setAttribute("pageHandler", pageHandler);
 		req.setAttribute("boards", boards);
 		req.getRequestDispatcher("/board.jsp").forward(req, resp);
-		
 	}
 }
