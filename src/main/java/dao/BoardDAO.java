@@ -45,9 +45,9 @@ public class BoardDAO {
 			while (rs.next()) { // 결과를 순화하며...
 				Board board = new Board();
 				board.setPostId(rs.getInt("postId")); // 일련번호
-				board.setAuthorId(rs.getString("authorId")); // 작성자 아이디
 				board.setTitle(rs.getString("title")); // 제목
 				board.setContent(rs.getString("content")); // 내용
+				board.setAuthorId(rs.getString("authorId")); // 작성자 아이디
 				board.setViewCount(rs.getInt("viewCount")); // 조회수
 				board.setPostDate(rs.getTimestamp("postDate")); // 작성일
 				boards.add(board); // 결과 목록에 저장
@@ -90,9 +90,9 @@ public class BoardDAO {
 			if (rs.next()) {
 				board = new Board();
 				board.setPostId(rs.getInt("postId"));
-				board.setAuthorId(rs.getString("authorId"));
 				board.setTitle(rs.getString("title"));
 				board.setContent(rs.getString("content"));
+				board.setAuthorId(rs.getString("authorId"));
 				board.setViewCount(rs.getInt("viewCount"));
 				board.setPostDate(rs.getTimestamp("postDate"));
 			}
@@ -118,13 +118,13 @@ public class BoardDAO {
 	}
 	
 	//글쓰기
-	public int insertBoard(String authorId, String title, String content) {
-		String sql = "INSERT INTO board(authorId, title, content) VALUES(?, ?, ?)";
+	public int insertBoard(String title, String content, String authorId) {
+		String sql = "INSERT INTO board(title, content, authorId) VALUES(?, ?, ?)";
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
-			psmt.setString(1, authorId);
-			psmt.setString(2, title);
-			psmt.setString(3, content);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, authorId);
 			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Board {
 	private int postId;
-	private String authorId;
 	private String title;
 	private String content;
+	private String authorId;
 	private int viewCount;
 	private Date postDate;
 	
@@ -23,12 +23,6 @@ public class Board {
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}
-	public String getAuthorId() {
-		return authorId;
-	}
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -40,6 +34,12 @@ public class Board {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
 	}
 	public int getViewCount() {
 		return viewCount;
