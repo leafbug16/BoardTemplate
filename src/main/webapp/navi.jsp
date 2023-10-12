@@ -18,7 +18,7 @@
 		<a href="#">HTML</a>
 		<a href="#">CSS</a>
 		<a href="#">JAVASCRIPT</a>
-		<a href="bbs">게시판</a>
+		<a href="board">게시판</a>
 		<div class=topNavRight">
 			<c:choose>
 				<c:when test="${not empty sessionScope.name }"><a href="logout">로그아웃</a></c:when>
