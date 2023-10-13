@@ -179,6 +179,83 @@ public class BoardDAO {
 		return -1;
 	}
 	
+	// 좋아요 수 업데이트
+	public int updateLikeCnt(int like, int boardId) {
+		String sql = "UPDATE BOARD_TB SET LIKE_CNT = LIKE_CNT + ? WHERE BOARD_ID = ?";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setInt(1, like);
+			psmt.setInt(2, boardId);
+			return psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//좋아요
+	public int insertLike(String userId, int boardId) {
+		String sql = "INSERT INTO LIKE_TB(USER_ID, BOARD_ID) VALUES(?, ?)";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, userId);
+			psmt.setInt(2, boardId);
+			return psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//좋아요 취소
+	public int deleteLike(String userId, int boardId) {
+		String sql = "DELETE FROM LIKE_TB WHERE USER_ID = ? AND BOARD_ID = ?";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, userId);
+			psmt.setInt(2, boardId);
+			return psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//좋아요 수 1 or 0 (유저가 해당 게시글에 좋아요 눌렀는지 확인용)
+	public int selectLikeCnt(String userId, int boardId) {
+		int res = 0;
+		String sql = "SELECT COUNT(*) FROM LIKE_TB WHERE USER_ID = ? AND BOARD_ID = ?";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setString(1, userId);
+			psmt.setInt(2, boardId);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				res = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	//특정 게시물의 모든 좋아요 수
+	public int selectLikeCntAll(int boardId) {
+		int res = 0;
+		String sql = "SELECT COUNT(*) FROM LIKE_TB WHERE BOARD_ID = ?";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setInt(1, boardId);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				res = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 }
 
 

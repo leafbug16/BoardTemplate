@@ -49,10 +49,27 @@ table, tr, td, th {
 					<button type="button" onclick="location.href='delete?boardId=${board.getBoardId() }'">삭제</button>
 				</c:if>
 				<button type="button" onclick="location.href='board';">목록보기</button>
+				<!-- 좋아요 기능 추가 -->
+				<c:if test="${res == 1 }">
+					<button id='afterLike' type='button' onclick='likeOff(boardId);' data-cnt ='1' data-check='true'>💚</button>
+				</c:if>
+				<c:if test='${res!=1 }'>
+					<button id='beforeLike' type='button' onclick='likeOn(boardId);' data-cnt ='0' data-check='false'>🤍</button>
+				</c:if>
+				[${board.getLikeCnt() }]
 			</td>
 		</tr>
 	</table>
 	<%@include file="comment.jsp" %>
+	<script>
+		boardId = ${param.boardId };
+		function likeOn(boardId) {
+			location.href = "./like?boardId="+boardId+"&mode=likeOn";
+		}
+		function likeOff(boardId) {
+			location.href = "./like?boardId="+boardId+"&mode=likeOff";
+		}
+	</script>
 </body>
 </html>
 

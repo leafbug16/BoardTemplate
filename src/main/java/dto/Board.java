@@ -10,6 +10,7 @@ public class Board {
 	private int viewCnt;
 	private Date createdAt;
 	private int commentCnt;
+	private int likeCnt;
 	
 	public Board(int boardId, String title, String content) {
 		this.boardId = boardId;
@@ -60,9 +61,16 @@ public class Board {
 	public void setCommentCnt(int commentCnt) {
 		this.commentCnt = commentCnt;
 	}
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
 	@Override
 	public String toString() {
 		return "Board [boardId=" + boardId + ", title=" + title + ", content=" + content + ", author=" + author + ", viewCnt=" + viewCnt + ", createdAt="
-				+ createdAt + ", commentCnt=" + commentCnt + "]";
+				+ createdAt + ", commentCnt=" + commentCnt + ", likeCnt=" + likeCnt + "]";
 	}
+	
 }

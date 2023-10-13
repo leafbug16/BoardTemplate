@@ -75,7 +75,7 @@
 				let commentId = $(this).parent().attr("data-commentId");
 				let boardId = $(this).parent().attr("data-boardId");
 				let originalComment = $("span.comment", $(this).parent()).text();
-				//#modBtn의 부모의 자식중 span.comment인애를 대체함
+				//#modBtn의 부모의 자식중 span.comment 요소를 대체함
 				$("span.comment", $(this).parent()).replaceWith("<input type='text' id='recomment' name='recomment' value='"+originalComment+"'>");
 				$(this).replaceWith("<button type='button' id='modCompleteBtn'>수정 완료</button");
 				$("#modCompleteBtn").attr("data-commentId", commentId);
