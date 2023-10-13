@@ -74,21 +74,22 @@
 			$("#comments").on("click", "#modBtn", (function() {
 				let commentId = $(this).parent().attr("data-commentId");
 				let boardId = $(this).parent().attr("data-boardId");
-				$("#mod").append("<input type='text' name='recomment' id='recomment'>");
-				$("#mod").append("<button type='button' id='modCompleteBtn'>수정완료</button>");
-				$("input[name=recomment]").val($("span.comment", $(this).parent()).text());
+				let originalComment = $("span.comment", $(this).parent()).text();
+				//#modBtn의 부모의 자식중 span.comment인애를 대체함
+				$("span.comment", $(this).parent()).replaceWith("<input type='text' id='recomment' name='recomment' value='"+originalComment+"'>");
+				$(this).replaceWith("<button type='button' id='modCompleteBtn'>수정 완료</button");
 				$("#modCompleteBtn").attr("data-commentId", commentId);
 			})); //modBtnb
 			
 			//수정완료 버튼 클릭 이벤트
-			$("#mod").on("click", "#modCompleteBtn", (function() {
+			$("#comments").on("click", "#modCompleteBtn", (function() {
 				let comment = $("input[name=recomment]").val();
 				if (comment.trim() == "") {
 					alert("내용을 입력하세요");
 					return;
 				}
 				let commentId = $("#modCompleteBtn").attr("data-commentId");
-				let delTmp = $("#recomment").detach();
+ 				let delTmp = $("#recomment").detach();
 				let btnTmp = $("#modCompleteBtn").detach();
 				$.ajax({
 					type : "POST",
