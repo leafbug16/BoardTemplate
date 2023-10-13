@@ -16,22 +16,22 @@ public class UserDAO {
 	private Statement stmt;
 	public UserDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/board_template";
+			String dbURL = "jdbc:mysql://localhost:3306/BOARD_TEMPLATE";
 			String dbID = "root";
 			String dbPassword = "0000";
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("DB연결 실패");
+			System.out.println("DB CONNECTION FAILED");
 		}
 	}
 	
 	public int insertUser(User user) {
-		String sql = "INSERT INTO user(id, password, name) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO USER_TB(USER_ID, PASSWORD, NAME) VALUES(?, ?, ?)";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, user.getId());
+			psmt.setString(1, user.getUserId());
 			psmt.setString(2, user.getPassword());
 			psmt.setString(3, user.getName());
 			return psmt.executeUpdate();
@@ -41,25 +41,24 @@ public class UserDAO {
 		return -1;
 	}
 	
-	public User selectUser(String id) {
+	public User selectUser(String userId) {
 		User user = null;
-		String sql = "SELECT * FROM user WHERE id = ?";
+		String sql = "SELECT * FROM USER_TB WHERE USER_ID = ?";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, id);
+			psmt.setString(1, userId);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				user = new User();
-				user.setId(rs.getString(1));
-				user.setPassword(rs.getString(2));
-				user.setName(rs.getString(3));
-				user.setRegDate(rs.getTimestamp(4));
+				user.setUserId(rs.getString("USER_ID"));
+				user.setPassword(rs.getString("PASSWORD"));
+				user.setName(rs.getString("NAME"));
+				user.setCreatedAt(rs.getTimestamp("CREATED_AT"));
 			}
-			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return user;
 	}
 	
 }

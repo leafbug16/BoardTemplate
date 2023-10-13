@@ -18,7 +18,7 @@ public class WriteController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		if (session.getAttribute("id") == null) {
+		if (session.getAttribute("userId") == null) {
 			JSFunction.alertBack("로그인 해주세요", resp);
 		}
 		req.getRequestDispatcher("/write.jsp").forward(req, resp);
@@ -29,9 +29,9 @@ public class WriteController extends HttpServlet{
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		HttpSession session = req.getSession();
-		String id = session.getAttribute("id").toString();
+		String sessionId = session.getAttribute("userId").toString();
 		BoardDAO boardDao = new BoardDAO();
-		int result = boardDao.insertBoard(title, content, id);
+		int result = boardDao.insertBoard(title, content, sessionId);
 		if (result == -1) {
 			JSFunction.alertBack("글쓰기 실패", resp);
 		} else {

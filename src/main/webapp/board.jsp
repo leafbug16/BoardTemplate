@@ -55,12 +55,12 @@
     <tbody>
       <c:forEach var="boards" items="${boards }">
         <tr style="text-align: center; border-top: 1px solid lightgray;">
-          <td>${boards.getPostId() }</td>
-          <td><a href="view?postId=${boards.getPostId() }">${boards.getTitle() }</a></td>
-          <td>${boards.getAuthorId() }</td>
-          <td>${boards.getViewCount() }</td>
-          <fmt:formatDate value="${boards.getPostDate() }" type="date" pattern="yyyy-MM-dd" var="postDate" />
-          <fmt:formatDate value="${boards.getPostDate() }" type="time" pattern="HH:mm" var="postTime" />
+          <td>${boards.getBoardId() }</td>
+          <td><a href="view?boardId=${boards.getBoardId() }">${boards.getTitle() }</a></td>
+          <td>${boards.getAuthor() }</td>
+          <td>${boards.getViewCnt() }</td>
+          <fmt:formatDate value="${boards.getCreatedAt() }" type="date" pattern="yyyy-MM-dd" var="postDate" />
+          <fmt:formatDate value="${boards.getCreatedAt() }" type="time" pattern="HH:mm" var="postTime" />
           <fmt:formatDate value="<%=new java.util.Date()%>" type="date" pattern="yyyy-MM-dd" var="today" />
           <c:choose>
             <c:when test="${postDate eq today }">
@@ -80,7 +80,7 @@
     <a href="<c:url value='/board${searchCondition.getQueryString(pageHandler.beginPage-1)}'/>">&laquo;</a>
   </c:if>
   <c:forEach var="i" begin="${pageHandler.beginPage }" end="${pageHandler.endPage }">
-    <a class="${pageHandler.searchCondition.pageNum==i? 'check':'' }" href="<c:url value='/board${pageHandler.searchCondition.getQueryString(i)}'/>">${i }</a>
+    <a class="${pageHandler.searchCondition.page==i? 'check':'' }" href="<c:url value='/board${pageHandler.searchCondition.getQueryString(i)}'/>">${i }</a>
   </c:forEach>
   <c:if test="${pageHandler.showNext }">
     <a href="<c:url value='/board${pageHandler.searchCondition.getQueryString(pageHandler.endPage+1)}'/>">&raquo;</a>

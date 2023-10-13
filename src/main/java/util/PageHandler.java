@@ -26,7 +26,7 @@ public class PageHandler {
 	
 	private void doPaging(int totalBoardCnt, SearchCondition searchCondition) {
 		totalPage = (int) Math.ceil(totalBoardCnt / (double) searchCondition.getPageSize());
-		beginPage = (searchCondition.getPageNum() - 1) / naviSize * naviSize + 1;
+		beginPage = (searchCondition.getPage() - 1) / naviSize * naviSize + 1;
 		endPage = Math.min(beginPage + naviSize - 1, totalPage);
 		showPrev = beginPage != 1;
 		showNext = endPage != totalPage;

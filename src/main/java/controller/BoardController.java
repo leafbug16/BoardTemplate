@@ -25,23 +25,23 @@ public class BoardController extends HttpServlet{
 		SearchCondition searchCondition = null;
 		String searchField = req.getParameter("searchField");
 		String searchWord = req.getParameter("searchWord");
-		int pageNum = 1;
-		String pageTemp = req.getParameter("pageNum");
+		int page = 1;
+		String pageTemp = req.getParameter("page");
 		if (pageTemp != null && !"".equals(pageTemp)) {
-			pageNum = Integer.parseInt(pageTemp);
+			page = Integer.parseInt(pageTemp);
 		}
 		int pageSize = 5;
 		if (searchWord != null && !"".equals(searchWord)) {
 			param.put("searchField", searchField);
 			param.put("searchWord", searchWord);
-			searchCondition = new SearchCondition(searchField, searchWord, pageNum, pageSize);
+			searchCondition = new SearchCondition(searchField, searchWord, page, pageSize);
 		} else {
-			searchCondition = new SearchCondition(pageNum, pageSize);
+			searchCondition = new SearchCondition(page, pageSize);
 		}
 		
 		BoardDAO boardDao = new BoardDAO();
 		int totalCount = boardDao.selectBoardCount(param);
-		param.put("offset", searchCondition.getOffset(pageNum)+"");
+		param.put("offset", searchCondition.getOffset(page)+"");
 		param.put("pageSize", pageSize+"");
 		List<Board> boards = boardDao.selectBoards(param);
 		

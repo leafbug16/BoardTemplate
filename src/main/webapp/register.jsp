@@ -10,8 +10,8 @@
 </head>
 <body>
 	<form action="register" method="post">
-		<h3><a href="index.jsp">회원가입 화면</a></h3>
-		id : <input type="text" name="id"><br>
+		<h3><a href="index.jsp">회원가입</a></h3>
+		id : <input type="text" name="userId"><br>
 		pw : <input type="password" name="password"><br>
 		name : <input type="text" name="name"><br>
 		<button>회원가입</button>

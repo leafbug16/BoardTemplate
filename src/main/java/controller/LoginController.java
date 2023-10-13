@@ -23,23 +23,23 @@ public class LoginController extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
-		String pass = req.getParameter("password");
-		String rememberId = req.getParameter("rememberId");
+		String userId = req.getParameter("userId");
+		String password = req.getParameter("password");
+		String rememberUserId = req.getParameter("rememberUserId");
 		UserDAO userDao = new UserDAO();
-		User user = userDao.selectUser(id);
+		User user = userDao.selectUser(userId);
 		
-		if (user != null && user.getId().equals(id) && user.getPassword().equals(pass)) {
-			if (rememberId != null) {
-				Cookie cookie = new Cookie("id", id);
+		if (user != null && user.getUserId().equals(userId) && user.getPassword().equals(password)) {
+			if (rememberUserId != null) {
+				Cookie cookie = new Cookie("userId", userId);
 				resp.addCookie(cookie);
 			} else {
-				Cookie cookie = new Cookie("id", "");
+				Cookie cookie = new Cookie("userId", "");
 				cookie.setMaxAge(0);
 				resp.addCookie(cookie);
 			}
 			HttpSession session = req.getSession();
-			session.setAttribute("id", id);
+			session.setAttribute("userId", userId);
 			session.setAttribute("name", user.getName());
 			resp.sendRedirect("./main");
 		} else {

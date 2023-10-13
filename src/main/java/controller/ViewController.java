@@ -17,17 +17,17 @@ public class ViewController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String snum = req.getParameter("postId");
-		if (snum == null) {
+		String tmp = req.getParameter("boardId");
+		if (tmp == null) {
 			JSFunction.alertLocation("잘못된 접근입니다", "main", resp);
 			return; // or throw an exception
 		}
 
-		int postId = Integer.parseInt(snum);
+		int boardId = Integer.parseInt(tmp);
 		Board board = new Board();
 		BoardDAO boardDao = new BoardDAO();
-		board = boardDao.selectBoard(postId);
-		boardDao.updateViewCount(postId);
+		board = boardDao.selectBoard(boardId);
+		boardDao.updateViewCount(boardId);
 		req.setAttribute("board", board);
 		
 		req.getRequestDispatcher("view.jsp").forward(req, resp);

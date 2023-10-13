@@ -3,25 +3,26 @@ package dto;
 import java.util.Date;
 
 public class Board {
-	private int postId;
+	private int boardId;
 	private String title;
 	private String content;
-	private String authorId;
-	private int viewCount;
-	private Date postDate;
+	private String author;
+	private int viewCnt;
+	private Date createdAt;
+	private int commentCnt;
 	
-	public Board(int postId, String title, String content) {
-		this.postId = postId;
+	public Board(int boardId, String title, String content) {
+		this.boardId = boardId;
 		this.title = title;
 		this.content = content;
 	}
 	public Board() {}
 	
-	public int getPostId() {
-		return postId;
+	public int getBoardId() {
+		return boardId;
 	}
-	public void setPostId(int postId) {
-		this.postId = postId;
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
 	public String getTitle() {
 		return title;
@@ -35,27 +36,33 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getAuthorId() {
-		return authorId;
+	public String getAuthor() {
+		return author;
 	}
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
-	public int getViewCount() {
-		return viewCount;
+	public int getViewCnt() {
+		return viewCnt;
 	}
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
-	public Date getPostDate() {
-		return postDate;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setPostDate(Date postDate) {
-		this.postDate = postDate;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
 	}
 	@Override
 	public String toString() {
-		return "Board [postId=" + postId + ", authorId=" + authorId + ", title=" + title + ", content=" + content + ", viewCount=" + viewCount + ", postDate="
-				+ postDate + "]";
+		return "Board [boardId=" + boardId + ", title=" + title + ", content=" + content + ", author=" + author + ", viewCnt=" + viewCnt + ", createdAt="
+				+ createdAt + ", commentCnt=" + commentCnt + "]";
 	}
 }

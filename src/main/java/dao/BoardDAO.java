@@ -20,7 +20,7 @@ public class BoardDAO {
 
 	public BoardDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/board_template";
+			String dbURL = "jdbc:mysql://localhost:3306/BOARD_TEMPLATE";
 			String dbID = "root";
 			String dbPassword = "0000";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -33,23 +33,24 @@ public class BoardDAO {
 	//게시글들을 리스트 형태로 반환
 	public List<Board> selectBoards(Map<String, String> map) {
 		List<Board> boards = new ArrayList<>(); // 결과(게시물 목록)를 담을 변수
-		String sql = "SELECT * FROM board ";
+		String sql = "SELECT * FROM BOARD_TB ";
 		if (map.get("searchWord") != null) {
 			sql += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		sql += " ORDER BY postId DESC ";
+		sql += " ORDER BY BOARD_ID DESC ";
 		sql += " LIMIT " + map.get("offset") + "," + map.get("pageSize");
 		try {
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) { // 결과를 순화하며...
 				Board board = new Board();
-				board.setPostId(rs.getInt("postId")); // 일련번호
-				board.setTitle(rs.getString("title")); // 제목
-				board.setContent(rs.getString("content")); // 내용
-				board.setAuthorId(rs.getString("authorId")); // 작성자 아이디
-				board.setViewCount(rs.getInt("viewCount")); // 조회수
-				board.setPostDate(rs.getTimestamp("postDate")); // 작성일
+				board.setBoardId(rs.getInt("BOARD_ID")); // 일련번호
+				board.setTitle(rs.getString("TITLE")); // 제목
+				board.setContent(rs.getString("CONTENT")); // 내용
+				board.setAuthor(rs.getString("AUTHOR")); // 작성자 아이디
+				board.setViewCnt(rs.getInt("VIEW_CNT")); // 조회수
+				board.setCreatedAt(rs.getTimestamp("CREATED_AT")); // 작성일
+				board.setCommentCnt(rs.getInt("COMMENT_CNT")); //댓글수
 				boards.add(board); // 결과 목록에 저장
 			}
 		} catch (Exception e) {
@@ -62,7 +63,7 @@ public class BoardDAO {
 	//총 게시글 수 반환
 	public int selectBoardCount(Map<String, String> map) {
 		int totalBoardCount = 0;
-		String sql = "SELECT COUNT(*) FROM board";
+		String sql = "SELECT COUNT(*) FROM BOARD_TB";
 		if (map.get("searchWord") != null) {
 			sql += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
 		}
@@ -80,21 +81,22 @@ public class BoardDAO {
 	}
 	
 	//게시글 하나 반환
-	public Board selectBoard(int postId) {
-		String sql = "SELECT * FROM board WHERE postId = ?";
+	public Board selectBoard(int boardId) {
+		String sql = "SELECT * FROM BOARD_TB WHERE BOARD_ID = ?";
 		Board board = null;
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
-			psmt.setInt(1, postId);
+			psmt.setInt(1, boardId);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				board = new Board();
-				board.setPostId(rs.getInt("postId"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setAuthorId(rs.getString("authorId"));
-				board.setViewCount(rs.getInt("viewCount"));
-				board.setPostDate(rs.getTimestamp("postDate"));
+				board.setBoardId(rs.getInt("BOARD_ID")); // 일련번호
+				board.setTitle(rs.getString("TITLE")); // 제목
+				board.setContent(rs.getString("CONTENT")); // 내용
+				board.setAuthor(rs.getString("AUTHOR")); // 작성자 아이디
+				board.setViewCnt(rs.getInt("VIEW_CNT")); // 조회수
+				board.setCreatedAt(rs.getTimestamp("CREATED_AT")); // 작성일
+				board.setCommentCnt(rs.getInt("COMMENT_CNT")); //댓글수
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,65 +106,64 @@ public class BoardDAO {
 	}
 	
 	//조회수
-	public int updateViewCount(int postId) {
-		String sql = "UPDATE board SET viewCount = viewCount + 1 WHERE postId = ?";
+	public int updateViewCount(int boardId) {
+		String sql = "UPDATE BOARD_TB SET VIEW_CNT = VIEW_CNT + 1 WHERE BOARD_ID = ?";
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
-			psmt.setInt(1, postId);
+			psmt.setInt(1, boardId);
 			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("조회수 에러");
+			System.out.println("updateViewCount 에러");
 		}
 		return -1;
 	}
 	
 	//글쓰기
-	public int insertBoard(String title, String content, String authorId) {
-		String sql = "INSERT INTO board(title, content, authorId) VALUES(?, ?, ?)";
+	public int insertBoard(String title, String content, String author) {
+		String sql = "INSERT INTO BOARD_TB(TITLE, CONTENT, AUTHOR) VALUES(?, ?, ?)";
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
 			psmt.setString(1, title);
 			psmt.setString(2, content);
-			psmt.setString(3, authorId);
+			psmt.setString(3, author);
 			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("글쓰기 에러");
+			System.out.println("insertBoard 에러");
 		}
 		return -1;
 	}
 	
 	//글수정
 	public int updateBoard(Board board) {
-		String sql = "UPDATE board SET title = ?, content = ? WHERE postId = ?";
+		String sql = "UPDATE BOARD_TB SET TITLE = ?, CONTENT = ? WHERE BOARD_ID = ?";
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
 			psmt.setString(1, board.getTitle());
 			psmt.setString(2, board.getContent());
-			psmt.setInt(3, board.getPostId());
+			psmt.setInt(3, board.getBoardId());
 			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("글수정 에러");
+			System.out.println("updateBoard 에러");
 		}
 		return -1;
 	}
 	
 	//글삭제
-	public int deleteBoard(int postId) {
-		String sql = "DELETE FROM board WHERE postId = ?";
+	public int deleteBoard(int boardId) {
+		String sql = "DELETE FROM BOARD_TB WHERE BOARD_ID = ?";
 		try {
 			PreparedStatement psmt = con.prepareStatement(sql);
-			psmt.setInt(1, postId);
+			psmt.setInt(1, boardId);
 			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("글삭제 에러");
+			System.out.println("deleteBoard 에러");
 		}
 		return -1;
 	}
-
 }
 
 

@@ -3,31 +3,28 @@ package dto;
 import java.util.Date;
 
 public class User {
-	private String id;
+	private String userId;
 	private String password;
 	private String name;
-	private Date regDate;
+	private Date createdAt;
 	
 	//생성자1
-	public User(String id, String password, String name) {
+	public User(String userId, String password, String name) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.password = password;
 		this.name = name;
 	}
-	
-	//생성자2
 	public User() {
 		super();
 	}
-	
-	//GETTER, SETTER
-	public String getId() {
-		return id;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {
@@ -46,11 +43,17 @@ public class User {
 		this.name = name;
 	}
 
-	public Date getRegDate() {
-		return regDate;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", createdAt=" + createdAt + "]";
+	}
+	
 }

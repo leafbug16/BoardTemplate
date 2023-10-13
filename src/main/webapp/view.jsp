@@ -26,10 +26,10 @@ table, tr, td, th {
 			<td>작성일</td>
 		</tr>
 		<tr>
-			<td>${board.getPostId() }</td>
-			<td>${board.getAuthorId() }</td>
-			<td>${board.getViewCount() }</td>
-			<td>${board.getPostDate() }</td>
+			<td>${board.getBoardId() }</td>
+			<td>${board.getAuthor() }</td>
+			<td>${board.getViewCnt() }</td>
+			<td>${board.getCreatedAt() }</td>
 		</tr>
 
 		<tr>
@@ -44,9 +44,9 @@ table, tr, td, th {
 		</tr>
 		<tr>
 			<td colspan="4">
-				<c:if test="${not empty sessionScope.id }">
-					<button type="button" onclick="location.href='update?postId=${board.getPostId() }';">수정</button>
-					<button type="button" onclick="location.href='delete?postId=${board.getPostId() }'">삭제</button>
+				<c:if test="${not empty sessionScope.userId }">
+					<button type="button" onclick="location.href='update?boardId=${board.getBoardId() }';">수정</button>
+					<button type="button" onclick="location.href='delete?boardId=${board.getBoardId() }'">삭제</button>
 				</c:if>
 				<button type="button" onclick="location.href='board';">목록보기</button>
 			</td>

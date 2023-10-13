@@ -22,11 +22,11 @@ public class RegisterController extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
+		String userId = req.getParameter("userId");
 		String password = req.getParameter("password");
 		String name = req.getParameter("name");
 		UserDAO userDao = new UserDAO();
-		User user = new User(id, password, name);
+		User user = new User(userId, password, name);
 		int result = userDao.insertUser(user);
 		if (result == -1) {
 			JSFunction.alertBack("회원가입 실패", resp);

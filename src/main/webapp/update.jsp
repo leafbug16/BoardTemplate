@@ -10,7 +10,7 @@
 	<%@include file="navi.jsp" %>
 	<h3>글수정</h3>
 	<form action="update" method="post">
-		<input type="hidden" name="postId" value="${board.getPostId() }">
+		<input type="hidden" name="boardId" value="${board.getBoardId() }">
 		제목<br>
 		<input type="text" name="title" value="${board.getTitle() }"><br>
 		내용<br>
