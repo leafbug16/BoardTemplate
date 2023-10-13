@@ -15,8 +15,8 @@
 		<input type="text" name="comment" id="comment">
 		<button type="button" id="sendBtn">등록</button>
 	</div>
-	<div class="mod"></div>
-	<div id="commentList"></div>
+	<div id="mod"></div>
+	<div id="comments"></div>
 	
 	<script>
 		let boardId = ${param.boardId };
@@ -35,15 +35,15 @@
 			});
 		}
 		
-		let toHtml = function(comments) {
+		let toHtml = function(jArray) {
 			let tmp = "<ul>";
-			comments.forEach(function (comment) {
-				tmp += "<li data-cno="+comment.cno + " data-bno="+comment.bno + ">";
+			jArray.forEach(function (comment) {
+				tmp += "<li data-commentId="+comment.commentId + " data-boardId="+comment.boardId + ">";
 				tmp +='commenter= <span class="commenter"> '+comment.commenter+'</span>';
 				tmp +='   comment= <span class="comment"> '+comment.comment+'</span>';
-				if (comment.commenter == "${sessionScope.id }") {
-					tmp += "<button type='button' class='delBtn'>삭제</button>";
-					tmp += "<button type='button' class='modBtnb'>수정</button>";
+				if (comment.commenter == "${sessionScope.userId }") {
+					tmp += "<button type='button' id='delBtn'>삭제</button>";
+					tmp += "<button type='button' id='modBtn'>수정</button>";
 				}
 				tmp += "</li>";
 			})
@@ -51,7 +51,7 @@
 		}
 		
 		$(document).ready(function() {
-			showList(bno);
+			showComments(boardId);
 			//등록 버튼
 			$("#sendBtn").click(function() {
 				let comment = $("input[name=comment]").val();
@@ -61,58 +61,58 @@
 				}
 				$.ajax({
 					type : "POST",
-					url : "./comments",
-					data : { bno: bno, comment: comment},
+					url : "./comment",
+					data : { boardId: boardId, comment: comment},
 					success : function(result) {
-						showList(bno);
+						showComments(boardId);
 					},
-					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error) }
+					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n" +"댓글 등록 에러") }
 				}); //ajax
 			}); //sendBtn
 			
-			//댓글 옆 수정 버튼
-			$("#commentList").on("click", ".modBtnb", (function() {
-				let cno = $(this).parent().attr("data-cno");
-				let bno = $(this).parent().attr("data-bno");
-				$(".mod").append("<input type='text' name='recomment' id='recomment'>");
-				$(".mod").append("<button type='button' id='modBtn'>수정</button>");
+			//댓글 옆 수정 버튼 클릭 이벤트
+			$("#comments").on("click", "#modBtn", (function() {
+				let commentId = $(this).parent().attr("data-commentId");
+				let boardId = $(this).parent().attr("data-boardId");
+				$("#mod").append("<input type='text' name='recomment' id='recomment'>");
+				$("#mod").append("<button type='button' id='modCompleteBtn'>수정완료</button>");
 				$("input[name=recomment]").val($("span.comment", $(this).parent()).text());
 				$("#modBtn").attr("data-cno", cno);
 			})); //modBtnb
 			
-			//등록 버튼 옆 수정 버튼
-			$(".mod").on("click", "#modBtn", (function() {
+			//수정완료 버튼 클릭 이벤트
+			$("#mod").on("click", "#modCompleteBtn", (function() {
 				let comment = $("input[name=recomment]").val();
 				if (comment.trim() == "") {
-					alert("입력 안하면 죽임");
+					alert("내용을 입력하세요");
 					return;
 				}
-				let cno = $("#modBtn").attr("data-cno");
-				let del = $("#recomment").detach();
-				let btn = $("#modBtn").detach();
+				let commentId = $("#modCompleteBtn").attr("data-commentId");
+				let delTmp = $("#recomment").detach();
+				let btnTmp = $("#modCompleteBtn").detach();
 				$.ajax({
 					type : "POST",
-					url : "./comments",
-					data : { cno: cno, comment: comment, mode: "mody" },
+					url : "./comment",
+					data : { commentId: commentId, comment: comment, mode: "patch" },
 					success : function(result){
-						showList(bno);
+						showComments(boardId);
 					},
-					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error) }
+					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n" +"댓글 수정 에러") }
 				}); //ajax
 			})); //modBtn
 			
 			//삭제 버튼
-			$("#commentList").on("click", ".delBtn", (function() {
-				let cno = $(this).parent().attr("data-cno");
-				let bno = $(this).parent().attr("data-bno");
+			$("#comments").on("click", ".delBtn", (function() {
+				let commentId = $(this).parent().attr("data-commentId");
+				let boardId = $(this).parent().attr("data-boardId");
 				$.ajax({
 					type : "GET",
-					url : "./comments",
-					data : { cno: cno, bno: bno, mode: "del" },
+					url : "./comment",
+					data : { commentId: commentId, boardId: boardId, mode: "delete" },
 					success : function(result) {
-						showList(bno);
+						showComments(boardId);
 					},
-					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error) }
+					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n" +"댓글 삭제 에러") }
 				}); //ajax
 			})); //delBtn	
 		}); //ready

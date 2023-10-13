@@ -52,6 +52,7 @@ table, tr, td, th {
 			</td>
 		</tr>
 	</table>
+	<%@include file="comment.jsp" %>
 </body>
 </html>
 

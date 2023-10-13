@@ -71,31 +71,30 @@ public class CommentDAO {
 	
 	//댓글 수정
 	public int update(Comment comment) {
-		int res = 0;
 		String sql = "UPDATE COMMENT_TB SET COMMENT = ?, CREATED_AT = now() WHERE COMMENT_ID = ?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, comment.getComment());
 			psmt.setInt(2, comment.getCommentId());
-			res = psmt.executeUpdate();
+			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("COMMENT_TB update 중 오류");
 		}
-		return res;
+		return -1;
 	}
 	
 	//댓글 삭제
 	public int delete(int commentId) {
-		int res = 0;
 		String sql = "DELETE FROM COMMENT_TB WHERE COMMENT_ID = ?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, commentId);
-			res = psmt.executeUpdate();
+			return psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return res;
+		return -1;
 	}
 	
 }
