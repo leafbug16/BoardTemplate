@@ -164,6 +164,21 @@ public class BoardDAO {
 		}
 		return -1;
 	}
+	
+	// 댓글수 수정
+	public int updateCommentCnt(int boardId, int commentCnt) {
+		String sql = "UPDATE BOARD_TB SET COMMENT_CNT = COMMENT_CNT + ? WHERE BOARD_ID = ?";
+		try {
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt.setInt(1, commentCnt);
+			psmt.setInt(2, boardId);
+			return psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
 }
 
 
