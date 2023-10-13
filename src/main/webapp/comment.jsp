@@ -77,7 +77,7 @@
 				$("#mod").append("<input type='text' name='recomment' id='recomment'>");
 				$("#mod").append("<button type='button' id='modCompleteBtn'>수정완료</button>");
 				$("input[name=recomment]").val($("span.comment", $(this).parent()).text());
-				$("#modBtn").attr("data-cno", cno);
+				$("#modCompleteBtn").attr("data-commentId", commentId);
 			})); //modBtnb
 			
 			//수정완료 버튼 클릭 이벤트
@@ -102,7 +102,7 @@
 			})); //modBtn
 			
 			//삭제 버튼
-			$("#comments").on("click", ".delBtn", (function() {
+			$("#comments").on("click", "#delBtn", (function() {
 				let commentId = $(this).parent().attr("data-commentId");
 				let boardId = $(this).parent().attr("data-boardId");
 				$.ajax({

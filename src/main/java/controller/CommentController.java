@@ -91,7 +91,7 @@ public class CommentController extends HttpServlet{
 		if (tmp != null) commentId = Integer.parseInt(tmp);
 
 		int boardId = 0;
-		String temp1 = req.getParameter("bno");
+		String temp1 = req.getParameter("boardId");
 		if (temp1 != null) boardId = Integer.parseInt(temp1);
 		
 		CommentDAO commentDao = new CommentDAO();
