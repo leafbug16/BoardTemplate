@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 table, tr, td, th {
 	border: 1px solid black;
@@ -50,25 +51,59 @@ table, tr, td, th {
 				</c:if>
 				<button type="button" onclick="location.href='board';">목록보기</button>
 				<!-- 좋아요 기능 추가 -->
-				<c:if test="${res == 1 }">
-					<button id='afterLike' type='button' onclick='likeOff(boardId);' data-cnt ='1' data-check='true'>💚</button>
-				</c:if>
-				<c:if test='${res!=1 }'>
-					<button id='beforeLike' type='button' onclick='likeOn(boardId);' data-cnt ='0' data-check='false'>🤍</button>
-				</c:if>
-				[${board.getLikeCnt() }]
+				<span id="likeIcon"></span>
+				<span id="likeCnt"></span>
 			</td>
 		</tr>
 	</table>
 	<%@include file="comment.jsp" %>
 	<script>
-		boardId = ${param.boardId };
-		function likeOn(boardId) {
-			location.href = "./like?boardId="+boardId+"&mode=likeOn";
-		}
-		function likeOff(boardId) {
-			location.href = "./like?boardId="+boardId+"&mode=likeOff";
-		}
+		let likeBoardId = ${board.boardId };
+		let showLike = function(likeBoardId) {
+			$.ajax({
+				type: "GET",
+				url: "./like",
+				data: { boardId: likeBoardId },
+				success: function(jArray) {
+					jArray.forEach(function (like) {
+						if (like.res == 1) {
+							$("#likeIcon").html("<button id='afterLike' type='button'>💚</button>");
+						} else {
+							$("#likeIcon").html("<button id='beforeLike' type='button'>🤍</button>");
+						}
+						$("#likeCnt").html('['+ like.likeCnt +']');
+					});
+				}, //success
+				error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"showLike 중 에러") }
+			}); //ajax
+		}; //showLike
+		
+		$(document).ready(function(){
+			showLike(likeBoardId);
+			$('#likeIcon').on("click", "#afterLike", function() {
+				$.ajax({
+					type : "GET",
+					url : "./like",
+					data : { boardId: likeBoardId, mode: "deleteLike"},
+					success : function(result) {
+						showLike(likeBoardId);
+					},
+					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n" +"댓글 등록 에러") }
+				}); //ajax
+			}); //afterLike
+			
+			$('#likeIcon').on("click", "#beforeLike", function() {
+				$.ajax({
+					type : "GET",
+					url : "./like",
+					data : { boardId: likeBoardId, mode: "addLike"},
+					success : function(result) {
+						showLike(likeBoardId);
+					},
+					error: function(request, status, error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n" +"댓글 등록 에러") }
+				}); //ajax
+			}); //beforeLike	
+		});	
 	</script>
 </body>
 </html>

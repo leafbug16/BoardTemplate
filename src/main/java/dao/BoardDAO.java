@@ -51,6 +51,7 @@ public class BoardDAO {
 				board.setViewCnt(rs.getInt("VIEW_CNT")); // 조회수
 				board.setCreatedAt(rs.getTimestamp("CREATED_AT")); // 작성일
 				board.setCommentCnt(rs.getInt("COMMENT_CNT")); //댓글수
+				board.setLikeCnt(rs.getInt("LIKE_CNT")); //좋아요 수
 				boards.add(board); // 결과 목록에 저장
 			}
 		} catch (Exception e) {
@@ -97,6 +98,7 @@ public class BoardDAO {
 				board.setViewCnt(rs.getInt("VIEW_CNT")); // 조회수
 				board.setCreatedAt(rs.getTimestamp("CREATED_AT")); // 작성일
 				board.setCommentCnt(rs.getInt("COMMENT_CNT")); //댓글수
+				board.setLikeCnt(rs.getInt("LIKE_CNT")); //좋아요 수
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

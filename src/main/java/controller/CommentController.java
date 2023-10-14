@@ -59,12 +59,12 @@ public class CommentController extends HttpServlet{
 		int boardId = 0;
 		if (tmp != null) boardId = Integer.parseInt(tmp);
 		String comment = req.getParameter("comment");
-		CommentDAO dao = new CommentDAO();
+		CommentDAO commentDao = new CommentDAO();
 		BoardDAO boardDao = new BoardDAO();
 		HttpSession session = req.getSession();
 		String sessionId = session.getAttribute("userId").toString();
 		Comment commentDto = new Comment(boardId, comment, sessionId);
-		int result = dao.insert(commentDto);
+		int result = commentDao.insert(commentDto);
 		if (result == 1) {
 			boardDao.updateCommentCnt(boardId, 1);
 		}

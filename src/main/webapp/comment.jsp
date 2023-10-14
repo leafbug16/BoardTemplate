@@ -15,7 +15,6 @@
 		<input type="text" name="comment" id="comment">
 		<button type="button" id="sendBtn">등록</button>
 	</div>
-	<div id="mod"></div>
 	<div id="comments"></div>
 	
 	<script>

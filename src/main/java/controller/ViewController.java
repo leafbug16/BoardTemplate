@@ -30,12 +30,6 @@ public class ViewController extends HttpServlet{
 		boardDao.updateViewCount(boardId);
 		req.setAttribute("board", board);
 		
-	  // 세션에서 저장된 id정보를 가져와서
-		String sessionId = req.getSession().getAttribute("userId")+"";
-		int res =boardDao.selectLikeCnt(sessionId, boardId); // 현재 사용자가 좋아요를 눌렀는지를 확인 ( 좋아요 개수 조회 )
-		req.setAttribute("res", res);
-		System.out.println(board.getLikeCnt());
-		
 		req.getRequestDispatcher("view.jsp").forward(req, resp);
 	}
 	
