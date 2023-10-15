@@ -47,9 +47,10 @@
       <tr>
         <th>글번호</th>
         <th>제목</th>
-        <th>작성자</th>
-        <th>조회수</th>
-        <th>작성일</th>
+        <th>글쓴이</th>
+        <th>등록일</th>
+        <th>조회</th>
+        <th>추천</th>
       </tr>
     </thead>
     <tbody>
@@ -58,7 +59,6 @@
           <td>${boards.getBoardId() }</td>
           <td><a href="view?boardId=${boards.getBoardId() }">${boards.getTitle() }</a></td>
           <td>${boards.getAuthor() }</td>
-          <td>${boards.getViewCnt() }</td>
           <fmt:formatDate value="${boards.getCreatedAt() }" type="date" pattern="yyyy-MM-dd" var="postDate" />
           <fmt:formatDate value="${boards.getCreatedAt() }" type="time" pattern="HH:mm" var="postTime" />
           <fmt:formatDate value="<%=new java.util.Date()%>" type="date" pattern="yyyy-MM-dd" var="today" />
@@ -70,6 +70,8 @@
           		<td>${postDate }</td>
         		</c:otherwise>
         	</c:choose>
+          <td>${boards.getViewCnt() }</td>
+          <td>${boards.getLikeCnt() }</td>
         </tr>
       </c:forEach>
     </tbody>
