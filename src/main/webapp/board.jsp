@@ -77,7 +77,7 @@
     
   <button type="button" onclick="location.href='write';">글쓰기</button>
   <c:if test="${pageHandler.showPrev }">
-    <a href="<c:url value='/board${searchCondition.getQueryString(pageHandler.beginPage-1)}'/>">&laquo;</a>
+    <a href="<c:url value='/board${pageHandler.searchCondition.getQueryString(pageHandler.beginPage-1)}'/>">&laquo;</a>
   </c:if>
   <c:forEach var="i" begin="${pageHandler.beginPage }" end="${pageHandler.endPage }">
     <a class="${pageHandler.searchCondition.page==i? 'check':'' }" href="<c:url value='/board${pageHandler.searchCondition.getQueryString(i)}'/>">${i }</a>

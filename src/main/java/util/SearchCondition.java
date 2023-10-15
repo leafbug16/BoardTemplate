@@ -32,11 +32,11 @@ public class SearchCondition {
 	}
 
 	//지정된 페이지가 있을 경우 쿼리스트링 반환
-	public String getQueryString(int pageNum) {
+	public String getQueryString(int page) {
 		if (searchWord != null && !"".equals(searchWord))
 			return "?page=" + page + "&pageSize=" + pageSize + "&searchField=" + searchField + "&searchWord=" + searchWord;
 		else
-			return "?page=" + page + "&pageSize=" + pageSize;
+			return "?page=" + page + "&pageSize=" + pageSize;		
 	}
 	
 	public String getSearchField() {
